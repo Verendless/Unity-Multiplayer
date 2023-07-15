@@ -93,8 +93,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7830265058743591082}
+  - component: {fileID: 6528059422458588636}
   - component: {fileID: 7996451563361410085}
   - component: {fileID: 7527311549830083904}
+  - component: {fileID: 5557773264147651398}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -119,6 +121,33 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!50 &6528059422458588636
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 87360906261895534}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 1
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!114 &7996451563361410085
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -169,6 +198,23 @@ MonoBehaviour:
   InLocalSpace: 0
   Interpolate: 1
   SlerpPosition: 0
+--- !u!114 &5557773264147651398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 87360906261895534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 585997f5ed7c1464aa0e96559dc2ff09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputReader: {fileID: 11400000, guid: c33adf36786f96f4f8aa9da7e9f14057, type: 2}
+  bodyTransform: {fileID: 6342613226124279166}
+  rb: {fileID: 6528059422458588636}
+  movementSpeed: 100
+  turningRate: 100
 --- !u!1 &1412301244141426779
 GameObject:
   m_ObjectHideFlags: 0
