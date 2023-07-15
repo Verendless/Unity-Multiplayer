@@ -14,7 +14,7 @@ namespace Player
         [SerializeField] private Rigidbody2D rb;
 
         [Header("Settings")]
-        [SerializeField] private float movementSpeed = 100f;
+        [SerializeField] private float movementSpeed = 4f;
         [SerializeField] private float turningRate = 100f;
 
         private Vector2 previousMovementInput;
@@ -45,7 +45,7 @@ namespace Player
         {
             if (!IsOwner) return;
 
-            rb.velocity = (Vector2)bodyTransform.up * previousMovementInput.y * movementSpeed;
+            rb.velocity = movementSpeed * previousMovementInput.y * (Vector2)bodyTransform.up;
         }
 
         private void HandleMove(Vector2 movement)

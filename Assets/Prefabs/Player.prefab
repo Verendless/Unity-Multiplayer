@@ -97,6 +97,7 @@ GameObject:
   - component: {fileID: 7996451563361410085}
   - component: {fileID: 7527311549830083904}
   - component: {fileID: 5557773264147651398}
+  - component: {fileID: 115235238813495979}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -213,8 +214,22 @@ MonoBehaviour:
   inputReader: {fileID: 11400000, guid: c33adf36786f96f4f8aa9da7e9f14057, type: 2}
   bodyTransform: {fileID: 6342613226124279166}
   rb: {fileID: 6528059422458588636}
-  movementSpeed: 100
+  movementSpeed: 4
   turningRate: 100
+--- !u!114 &115235238813495979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 87360906261895534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c74cecfe9bdbb640a5d6cc0f510b996, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputReader: {fileID: 11400000, guid: c33adf36786f96f4f8aa9da7e9f14057, type: 2}
+  turretTransfrom: {fileID: 6464852900788047324}
 --- !u!1 &1412301244141426779
 GameObject:
   m_ObjectHideFlags: 0
