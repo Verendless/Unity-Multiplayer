@@ -94,7 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7830265058743591082}
   - component: {fileID: 7996451563361410085}
-  - component: {fileID: 7451727751707801809}
+  - component: {fileID: 7527311549830083904}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -139,7 +139,7 @@ MonoBehaviour:
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
---- !u!114 &7451727751707801809
+--- !u!114 &7527311549830083904
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -148,7 +148,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 87360906261895534}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
+  m_Script: {fileID: 11500000, guid: d91fa741648286d4fab293b13db6d813, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   SyncPositionX: 1
@@ -178,7 +178,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6464852900788047324}
-  - component: {fileID: 1954396843739745338}
+  - component: {fileID: 8473996106246939197}
   m_Layer: 0
   m_Name: Turret Pivot
   m_TagString: Untagged
@@ -202,7 +202,7 @@ Transform:
   m_Father: {fileID: 7830265058743591082}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1954396843739745338
+--- !u!114 &8473996106246939197
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -211,7 +211,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1412301244141426779}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
+  m_Script: {fileID: 11500000, guid: d91fa741648286d4fab293b13db6d813, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   SyncPositionX: 0
@@ -243,7 +243,7 @@ GameObject:
   - component: {fileID: 6342613226124279166}
   - component: {fileID: 4050439265881036751}
   - component: {fileID: 3281916215335484645}
-  - component: {fileID: 4281711629206627925}
+  - component: {fileID: 4531680694009010410}
   m_Layer: 0
   m_Name: Tank Tracks
   m_TagString: Untagged
@@ -364,7 +364,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.75, y: 2.05}
   m_EdgeRadius: 0
---- !u!114 &4281711629206627925
+--- !u!114 &4531680694009010410
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -373,7 +373,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6842964317026179121}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
+  m_Script: {fileID: 11500000, guid: d91fa741648286d4fab293b13db6d813, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   SyncPositionX: 0
