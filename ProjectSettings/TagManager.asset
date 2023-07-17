@@ -44,6 +44,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Coin
+    uniqueID: 945054893
+    locked: 0
   - name: The Player Layer
     uniqueID: 1923527229
     locked: 0
