@@ -19,6 +19,8 @@ namespace Network
             CanCommitToTransform = IsOwner;
             base.Update();
 
+            // Let client handle thier own character movement
+            // This is for reduced the lag and rubber banding
             if(NetworkManager != null)
                 if(NetworkManager.IsConnectedClient || NetworkManager.IsListening)
                     if (CanCommitToTransform)
