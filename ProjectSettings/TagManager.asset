@@ -50,3 +50,6 @@ TagManager:
   - name: The Player Layer
     uniqueID: 1923527229
     locked: 0
+  - name: Terrain
+    uniqueID: 3842894945
+    locked: 0

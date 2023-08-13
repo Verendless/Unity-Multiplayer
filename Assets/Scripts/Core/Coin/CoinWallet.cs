@@ -16,6 +16,11 @@ namespace Coin
 
             TotalCoins.Value += tempCoinWallet;
         }
+
+        public void SpenCoins(int value)
+        {
+            TotalCoins.Value -= value;
+        }
     }
 
 }
