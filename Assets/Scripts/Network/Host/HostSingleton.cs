@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
-
 
 namespace Network
 {
@@ -10,13 +6,13 @@ namespace Network
     {
         private static HostSingleton instance;
 
-        private HostGameManager hostGameManager;
+        public HostGameManager HostGameManager { get; private set; }
 
         public static HostSingleton Instance
         {
             get
             {
-                if (instance == null) return instance;
+                if (instance != null) return instance;
 
                 instance = FindObjectOfType<HostSingleton>();
 
@@ -37,7 +33,7 @@ namespace Network
 
         public void CreateHost()
         {
-            hostGameManager = new HostGameManager();
+            HostGameManager = new HostGameManager();
         }
     }
 

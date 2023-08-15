@@ -55,15 +55,15 @@ namespace Network
                     }
                 }
                 // Catch login error
-                catch (AuthenticationException authEx)
+                catch (AuthenticationException authExc)
                 {
-                    Debug.LogError(authEx.Message);
+                    Debug.LogError(authExc.Message);
                     AuthState = AuthState.Error;
                 }
                 // Catch request error
-                catch (RequestFailedException reqEx)
+                catch (RequestFailedException reqExc)
                 {
-                    Debug.LogError(reqEx.Message);
+                    Debug.LogError(reqExc.Message);
                     AuthState = AuthState.Error;
                 }
 
@@ -74,7 +74,7 @@ namespace Network
             if (AuthState != AuthState.Authenticated)
             {
                 Debug.LogWarning($"Player was not signed in succesfully after {retries} tries");
-                
+
                 // Failed to signed in
                 AuthState = AuthState.TimeOut;
             }

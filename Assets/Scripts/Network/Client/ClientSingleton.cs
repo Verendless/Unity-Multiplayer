@@ -15,7 +15,7 @@ namespace Network
         {
             get
             {
-                if (instance == null) return instance;
+                if (instance != null) return instance;
 
                 instance = FindObjectOfType<ClientSingleton>();
 
