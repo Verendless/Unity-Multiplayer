@@ -1,9 +1,10 @@
+using System;
 using Unity.Netcode;
 using UnityEngine.SceneManagement;
 
 namespace Network
 {
-    public class NetworkClient
+    public class NetworkClient : IDisposable
     {
         private NetworkManager networkManager;
 
@@ -28,6 +29,12 @@ namespace Network
             // When failed to connect in main menu then stop trying to connect
             if (networkManager.IsConnectedClient)
                 networkManager.Shutdown();
+        }
+
+        public void Dispose()
+        {
+            if (networkManager != null)
+                networkManager.OnClientDisconnectCallback -= OnClientDisconnect;
         }
     }
 }

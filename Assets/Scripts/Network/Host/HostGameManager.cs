@@ -16,7 +16,7 @@ using Unity.Services.Authentication;
 
 namespace Network
 {
-    public class HostGameManager
+    public class HostGameManager : IDisposable
     {
         private Allocation allocation;
         private const int MaxConnections = 20;
@@ -116,6 +116,28 @@ namespace Network
                 Lobbies.Instance.SendHeartbeatPingAsync(lobbyId);
                 yield return wait;
             }
+        }
+
+        public async void Dispose()
+        {
+            HostSingleton.Instance.StopCoroutine(nameof(HeartbeatLobby));
+
+            // Delete Lobby
+            if (!string.IsNullOrEmpty(lobbyId))
+            {
+                try
+                {
+                    await Lobbies.Instance.DeleteLobbyAsync(lobbyId);
+                }
+                catch (LobbyServiceException e)
+                {
+                    Debug.Log(e);
+                }
+
+                lobbyId = string.Empty;
+            }
+
+            networkServer.Dispose();
         }
     }
 }

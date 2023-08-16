@@ -13,7 +13,7 @@ using UnityEngine.SceneManagement;
 
 namespace Network
 {
-    public class ClientGameManager
+    public class ClientGameManager : IDisposable
     {
         private const string MenuSceneName = "Menu";
 
@@ -77,6 +77,11 @@ namespace Network
 
             // Start the client
             NetworkManager.Singleton.StartClient();
+        }
+
+        public void Dispose()
+        {
+            networkClient?.Dispose();
         }
     }
 

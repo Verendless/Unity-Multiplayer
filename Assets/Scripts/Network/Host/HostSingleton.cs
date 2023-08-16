@@ -35,6 +35,11 @@ namespace Network
         {
             HostGameManager = new HostGameManager();
         }
+
+        private void OnDestroy()
+        {
+            HostGameManager.Dispose();
+        }
     }
 
 }
