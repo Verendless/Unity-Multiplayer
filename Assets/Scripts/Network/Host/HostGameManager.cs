@@ -1,10 +1,14 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using Unity.Networking.Transport.Relay;
+using Unity.Services.Lobbies;
 using Unity.Services.Relay;
 using Unity.Services.Relay.Models;
+using Unity.Services.Lobbies.Models;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -16,6 +20,7 @@ namespace Network
         private const int MaxConnections = 20;
 
         public string JoinCode { get; private set; }
+        private string lobbyId;
 
         private const string GameSceneName = "Game";
 
@@ -49,11 +54,47 @@ namespace Network
             RelayServerData relayServerData = new RelayServerData(allocation, "dtls");
             unityTransport.SetRelayServerData(relayServerData);
 
+            // Setup lobby
+            try
+            {
+                CreateLobbyOptions lobbyOptions = new CreateLobbyOptions();
+                lobbyOptions.IsPrivate = false;
+                lobbyOptions.Data = new Dictionary<string, DataObject>()
+                {
+                  {
+                    "JoinCode", new DataObject(
+                        visibility: DataObject.VisibilityOptions.Member,
+                        value: JoinCode
+                    )
+                  }
+                };
+                Lobby lobby = await Lobbies.Instance.CreateLobbyAsync("My Lobby", MaxConnections, lobbyOptions);
+                lobbyId = lobby.Id;
+
+                // Ping UGS every x seconds to keep the lobbies alive
+                HostSingleton.Instance.StartCoroutine(HeartbeatLobby(15));
+            }
+            catch (LobbyServiceException ex)
+            {
+                Debug.Log(ex);
+                return;
+            }
+
             // Start the host
             NetworkManager.Singleton.StartHost();
 
             // Load to Game scene
             NetworkManager.Singleton.SceneManager.LoadScene(GameSceneName, LoadSceneMode.Single);
+        }
+
+        private IEnumerator HeartbeatLobby(float waitTimeSec)
+        {
+            WaitForSecondsRealtime wait = new WaitForSecondsRealtime(waitTimeSec);
+            while (true)
+            {
+                Lobbies.Instance.SendHeartbeatPingAsync(lobbyId);
+                yield return wait;
+            }
         }
     }
 }
