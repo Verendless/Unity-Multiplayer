@@ -51,7 +51,7 @@ namespace Network
             // Set allocation transport protocol to relay
             UnityTransport unityTransport = NetworkManager.Singleton.GetComponent<UnityTransport>();
 
-            RelayServerData relayServerData = new RelayServerData(joinAllocation, "udp");
+            RelayServerData relayServerData = new RelayServerData(joinAllocation, "dtls");
             unityTransport.SetRelayServerData(relayServerData);
 
             // Start the client

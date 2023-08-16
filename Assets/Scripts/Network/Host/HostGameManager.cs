@@ -13,8 +13,9 @@ namespace Network
     public class HostGameManager
     {
         private Allocation allocation;
-        private string joinCode;
         private const int MaxConnections = 20;
+
+        public string JoinCode { get; private set; }
 
         private const string GameSceneName = "Game";
 
@@ -34,8 +35,8 @@ namespace Network
             // Try get allocated join code if we get the server allocation
             try
             {
-                joinCode = await Relay.Instance.GetJoinCodeAsync(allocation.AllocationId);
-                Debug.Log(joinCode);
+                JoinCode = await Relay.Instance.GetJoinCodeAsync(allocation.AllocationId);
+                Debug.Log(JoinCode);
             }
             catch (Exception ex)
             {
@@ -45,7 +46,7 @@ namespace Network
 
             // Set allocation transport protocol to relay
             UnityTransport unityTransport = NetworkManager.Singleton.GetComponent<UnityTransport>();
-            RelayServerData relayServerData = new RelayServerData(allocation, "udp");
+            RelayServerData relayServerData = new RelayServerData(allocation, "dtls");
             unityTransport.SetRelayServerData(relayServerData);
 
             // Start the host
