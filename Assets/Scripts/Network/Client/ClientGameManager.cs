@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using Unity.Networking.Transport.Relay;
+using Unity.Services.Authentication;
 using Unity.Services.Core;
 using Unity.Services.Relay;
 using Unity.Services.Relay.Models;
@@ -18,10 +19,15 @@ namespace Network
 
         private JoinAllocation joinAllocation;
 
+        private NetworkClient networkClient;
+
         public async Task<bool> InitAsync()
         {
             // Authenticate Player
             await UnityServices.InitializeAsync();
+
+            networkClient = new NetworkClient(NetworkManager.Singleton);
+
             AuthState authState = await AuthenticationHandler.DoAuth();
 
             if (authState == AuthState.Authenticated)
@@ -58,7 +64,8 @@ namespace Network
             // Set Username on the network
             UserData userData = new UserData
             {
-                userName = PlayerPrefs.GetString(NameSelector.PlayerNameKey, "Missing Name")
+                userName = PlayerPrefs.GetString(NameSelector.PlayerNameKey, "Missing Name"),
+                userAuthId = AuthenticationService.Instance.PlayerId
             };
 
             // Convert userData from JSON to byte array

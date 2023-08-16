@@ -12,6 +12,7 @@ using Unity.Services.Lobbies.Models;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Text;
+using Unity.Services.Authentication;
 
 namespace Network
 {
@@ -89,7 +90,8 @@ namespace Network
             // Set Username on the network
             UserData userData = new UserData
             {
-                userName = PlayerPrefs.GetString(NameSelector.PlayerNameKey, "Missing Name")
+                userName = PlayerPrefs.GetString(NameSelector.PlayerNameKey, "Missing Name"),
+                userAuthId = AuthenticationService.Instance.PlayerId
             };
 
             // Convert userData from JSON to byte array
