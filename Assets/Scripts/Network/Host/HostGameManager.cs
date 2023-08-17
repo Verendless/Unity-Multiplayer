@@ -21,7 +21,7 @@ namespace Network
         private Allocation allocation;
         private const int MaxConnections = 20;
 
-        private NetworkServer networkServer;
+        public NetworkServer NetworkServer { get; private set; }
 
         public string JoinCode { get; private set; }
         private string lobbyId;
@@ -85,7 +85,7 @@ namespace Network
                 return;
             }
 
-            networkServer = new NetworkServer(NetworkManager.Singleton);
+            NetworkServer = new NetworkServer(NetworkManager.Singleton);
 
             // Set Username on the network
             UserData userData = new UserData
@@ -137,7 +137,7 @@ namespace Network
                 lobbyId = string.Empty;
             }
 
-            networkServer.Dispose();
+            NetworkServer.Dispose();
         }
     }
 }
