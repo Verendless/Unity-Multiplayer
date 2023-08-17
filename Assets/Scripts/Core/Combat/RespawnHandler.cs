@@ -6,7 +6,8 @@ using UnityEngine;
 
 public class RespawnHandler : NetworkBehaviour
 {
-    [SerializeField] private NetworkObject playerPrefab;
+    [SerializeField] private TankPlayer playerPrefab;
+    [SerializeField] private float keptCoinPercentage;
 
     private const int TimeToRespawn = 3;
 
@@ -46,17 +47,20 @@ public class RespawnHandler : NetworkBehaviour
 
     private void HandlePlayerDeath(TankPlayer player)
     {
+        int keptCoint = (int)(player.coinWallet.TotalCoins.Value * (keptCoinPercentage / 100));
+
         Destroy(player.gameObject);
 
-        StartCoroutine(RespawnPlayer(player.OwnerClientId));
+        StartCoroutine(RespawnPlayer(player.OwnerClientId, keptCoint));
     }
 
-    // Wait for next frame to respawn the player who died
-    private IEnumerator RespawnPlayer(ulong OwnerClientId)
+    // Wait for x seconds to respawn the player who died
+    private IEnumerator RespawnPlayer(ulong OwnerClientId, int keptCoints)
     {
         yield return new WaitForSecondsRealtime(TimeToRespawn);
 
-        NetworkObject playerInstance = Instantiate(playerPrefab, SpawnPoint.GetRandomSpawnPointPos(), Quaternion.identity);
-        playerInstance.SpawnAsPlayerObject(OwnerClientId);
+        TankPlayer playerInstance = Instantiate(playerPrefab, SpawnPoint.GetRandomSpawnPointPos(), Quaternion.identity);
+        playerInstance.NetworkObject.SpawnAsPlayerObject(OwnerClientId);
+        playerInstance.coinWallet.TotalCoins.Value += keptCoints;
     }
 }
