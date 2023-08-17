@@ -231,6 +231,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cinemachineVirtualCamera: {fileID: 3803972603267270057}
+  <Health>k__BackingField: {fileID: 8975756694610880359}
   ownerPriority: 15
   playerName:
     m_InternalValue:
