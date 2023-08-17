@@ -15,31 +15,31 @@ public class RespawnHandler : NetworkBehaviour
         if (!IsServer) return;
 
         // Search for existing player in the scene
-        TankPlayer[] players = FindObjectsOfType<TankPlayer>();
+        TankPlayer[] players = FindObjectsByType<TankPlayer>(FindObjectsSortMode.None);
         foreach (TankPlayer player in players)
         {
-            HandlerPlayerSpawned(player);
+            HandlePlayerSpawned(player);
         }
 
         // This is for to be spawned player and for despawned player
-        TankPlayer.OnPlayerSpawn += HandlerPlayerSpawned;
-        TankPlayer.OnPlayerSpawn += HandlerPlayerDespawned;
+        TankPlayer.OnPlayerSpawn += HandlePlayerSpawned;
+        TankPlayer.OnPlayerDespawn += HandlePlayerDespawned;
     }
 
     public override void OnNetworkDespawn()
     {
         if (!IsServer) return;
 
-        TankPlayer.OnPlayerSpawn -= HandlerPlayerSpawned;
-        TankPlayer.OnPlayerSpawn -= HandlerPlayerDespawned;
+        TankPlayer.OnPlayerSpawn -= HandlePlayerSpawned;
+        TankPlayer.OnPlayerDespawn -= HandlePlayerDespawned;
     }
 
-    private void HandlerPlayerSpawned(TankPlayer player)
+    private void HandlePlayerSpawned(TankPlayer player)
     {
         player.Health.OnDied += (health) => HandlePlayerDeath(player);
     }
 
-    private void HandlerPlayerDespawned(TankPlayer player)
+    private void HandlePlayerDespawned(TankPlayer player)
     {
         player.Health.OnDied = (health) => HandlePlayerDeath(player);
     }

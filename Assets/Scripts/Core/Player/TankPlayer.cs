@@ -1,5 +1,6 @@
 using System;
 using Cinemachine;
+using Coin;
 using Combat;
 using Network;
 using Unity.Collections;
@@ -11,6 +12,7 @@ public class TankPlayer : NetworkBehaviour
     [Header("References")]
     [SerializeField] private CinemachineVirtualCamera cinemachineVirtualCamera;
     [field: SerializeField] public Health Health { get; private set; }
+    [field: SerializeField] public CoinWallet coinWallet { get; private set; }
 
     [Header("Setting")]
     [SerializeField] private int ownerPriority = 15;
