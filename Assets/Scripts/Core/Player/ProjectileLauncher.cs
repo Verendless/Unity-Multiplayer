@@ -81,7 +81,7 @@ namespace Player
         {
             if (coinWallet.TotalCoins.Value < costToFire) return;
 
-            coinWallet.SpenCoins(costToFire);
+            coinWallet.SpendCoins(costToFire);
 
             GameObject projectileInstance = Instantiate(serverProjectilePrefab, spawnPos, Quaternion.identity);
 
