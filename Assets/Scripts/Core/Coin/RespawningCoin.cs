@@ -15,8 +15,8 @@ namespace Coin
 
         private void Update()
         {
-            if(!IsServer) { return; }
-            if(transform.position != previousPos)
+            if (!IsServer) { return; }
+            if (transform.position != previousPos)
             {
                 Show(true);
             }
