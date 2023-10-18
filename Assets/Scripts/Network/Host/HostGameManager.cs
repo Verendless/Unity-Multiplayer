@@ -104,10 +104,25 @@ namespace Network
             // Start the host
             NetworkManager.Singleton.StartHost();
 
+            NetworkServer.OnClientLeft += HandleClientLeft;
+
             // Load to Game scene
             NetworkManager.Singleton.SceneManager.LoadScene(GameSceneName, LoadSceneMode.Single);
         }
 
+        private async void HandleClientLeft(string authId)
+        {
+            try
+            {
+                await LobbyService.Instance.RemovePlayerAsync(lobbyId, authId);
+            }
+            catch (LobbyServiceException e)
+            {
+                Debug.Log(e);
+            }
+        }
+
+        // Ping to the server to keep the lobby alive
         private IEnumerator HeartbeatLobby(float waitTimeSec)
         {
             WaitForSecondsRealtime wait = new WaitForSecondsRealtime(waitTimeSec);
@@ -118,26 +133,33 @@ namespace Network
             }
         }
 
-        public async void Dispose()
+        public async void Shutdown()
         {
+            if (string.IsNullOrEmpty(lobbyId)) return;
+            
+            // Stop ping to the server
             HostSingleton.Instance.StopCoroutine(nameof(HeartbeatLobby));
 
             // Delete Lobby
-            if (!string.IsNullOrEmpty(lobbyId))
+            try
             {
-                try
-                {
-                    await Lobbies.Instance.DeleteLobbyAsync(lobbyId);
-                }
-                catch (LobbyServiceException e)
-                {
-                    Debug.Log(e);
-                }
-
-                lobbyId = string.Empty;
+                await Lobbies.Instance.DeleteLobbyAsync(lobbyId);
+            }
+            catch (LobbyServiceException e)
+            {
+                Debug.Log(e);
             }
 
-            NetworkServer.Dispose();
+            lobbyId = string.Empty;
+
+            NetworkServer.OnClientLeft -= HandleClientLeft;
+
+            NetworkServer?.Dispose();
+        }
+
+        public void Dispose()
+        {
+            Shutdown();
         }
     }
 }

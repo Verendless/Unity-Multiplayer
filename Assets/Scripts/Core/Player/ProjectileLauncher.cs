@@ -5,7 +5,7 @@ using Input;
 using Unity.Netcode;
 using UnityEngine;
 
-namespace Player
+namespace PlayerCore
 {
     public class ProjectileLauncher : NetworkBehaviour
     {

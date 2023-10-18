@@ -58,5 +58,6 @@
         "Temp/":true
     },
     "omnisharp.enableRoslynAnalyzers": true,
-    "dotnet.defaultSolution": "Unity Multiplayer.sln"
+    "dotnet.defaultSolution": "Unity Multiplayer.sln",
+    "dotnet.preferCSharpExtension": true
 }

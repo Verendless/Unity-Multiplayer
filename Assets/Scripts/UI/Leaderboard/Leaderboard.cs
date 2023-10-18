@@ -47,6 +47,7 @@ namespace Leaderboard
             // This is for to be spawned player and for despawned player
             TankPlayer.OnPlayerSpawn += HandlePlayerSpawned;
             TankPlayer.OnPlayerDespawn += HandlePlayerDespawned;
+            TankPlayer.OnPlayerDespawn -= HandlePlayerDespawned;
         }
 
         public override void OnNetworkDespawn()
@@ -59,7 +60,7 @@ namespace Leaderboard
             if (!IsServer) return;
 
             TankPlayer.OnPlayerSpawn -= HandlePlayerSpawned;
-            TankPlayer.OnPlayerSpawn -= HandlePlayerDespawned;
+            TankPlayer.OnPlayerDespawn -= HandlePlayerDespawned;
         }
 
         private void HandleLeaderboardEntitiesChanged(NetworkListEvent<LeaderboardEntity> changeEvent)
@@ -80,17 +81,19 @@ namespace Leaderboard
                     break;
                 // Remove player's leaderboard when they disconnected from the server
                 case NetworkListEvent<LeaderboardEntity>.EventType.Remove:
-                    LeaderboardItem itemToRemove = leaderboardItems.FirstOrDefault(x => x.ClientId.Equals(changeEvent.Value.ClientId));
-                    if(itemToRemove != null)
+                    LeaderboardItem itemToRemove = 
+                        leaderboardItems.FirstOrDefault(x => x.ClientId.Equals(changeEvent.Value.ClientId));
+                    if (itemToRemove != null)
                     {
                         itemToRemove.transform.SetParent(null);
-                        Destroy(itemToRemove.gameObject);
                         leaderboardItems.Remove(itemToRemove);
+                        Destroy(itemToRemove.gameObject);
                     }
                     break;
                 // Update player's leaderboard value
                 case NetworkListEvent<LeaderboardEntity>.EventType.Value:
-                    LeaderboardItem itemToUpdate = leaderboardItems.FirstOrDefault(x => x.ClientId.Equals(changeEvent.Value.ClientId));
+                    LeaderboardItem itemToUpdate = 
+                        leaderboardItems.FirstOrDefault(x => x.ClientId.Equals(changeEvent.Value.ClientId));
                     if(itemToUpdate != null ) 
                     {
                         itemToUpdate.UpdateCoin(changeEvent.Value.PlayerCoins);
@@ -98,7 +101,7 @@ namespace Leaderboard
                     break;
             }
 
-            // TODO: Sort the Leaderboard
+            // Sort the Leaderboard
             leaderboardItems.Sort((x, y) => y.PlayerCoins.CompareTo(x.PlayerCoins));
 
             for (int i = 0; i < leaderboardItems.Count; i++)
@@ -141,7 +144,7 @@ namespace Leaderboard
         // Delete player's leaderboard entity when dispawned
         private void HandlePlayerDespawned(TankPlayer player)
         {
-            if (leaderboardEntities == null) return;
+            if (!gameObject.scene.isLoaded) return;
 
             foreach (LeaderboardEntity entity in leaderboardEntities)
             {

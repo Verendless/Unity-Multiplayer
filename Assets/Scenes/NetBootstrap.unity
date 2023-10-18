@@ -337,6 +337,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clientSingletonPrefab: {fileID: 3106026835634550878, guid: 6562052694e34864091dec0f97e36c39, type: 3}
   hostSingletonPrefab: {fileID: 6371628183869599353, guid: e2319b08699bbff49804b3775f5471e2, type: 3}
+  serverSingletonPrefab: {fileID: 2302018343302918820, guid: 194636ce484e07143baef46078ce315e, type: 3}
 --- !u!1 &777153608
 GameObject:
   m_ObjectHideFlags: 0

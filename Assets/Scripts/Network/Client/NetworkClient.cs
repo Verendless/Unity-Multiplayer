@@ -22,6 +22,11 @@ namespace Network
             // Check if the client who disconnected is the Host
             if (clientId != 0 && clientId != networkManager.LocalClientId) return;
 
+            Disconnect();
+        }
+
+        public void Disconnect()
+        {
             // Go back to main menu if got disconnected from the game scene
             if (SceneManager.GetActiveScene().name != MenuSceneName)
                 SceneManager.LoadScene(MenuSceneName);
