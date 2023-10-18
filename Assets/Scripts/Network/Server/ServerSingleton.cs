@@ -19,11 +19,7 @@ namespace Network
 
                 instance = FindObjectOfType<ServerSingleton>();
 
-                if (instance == null)
-                {
-                    Debug.LogError("No ServerSingleton in the Scene!");
-                    return null;
-                }
+                if (instance == null) return null;
 
                 return instance;
             }
@@ -35,14 +31,15 @@ namespace Network
             DontDestroyOnLoad(gameObject);
         }
 
-        public async Task CreateServer()
+        public async Task CreateServer(NetworkObject playerPrefab)
         {
             await UnityServices.InitializeAsync();
             ServerGameManager = new ServerGameManager(
                 ApplicationData.IP(),
                 ApplicationData.Port(),
                 ApplicationData.QPort(),
-                NetworkManager.Singleton);
+                NetworkManager.Singleton,
+                playerPrefab);
         }
 
         private void OnDestroy()

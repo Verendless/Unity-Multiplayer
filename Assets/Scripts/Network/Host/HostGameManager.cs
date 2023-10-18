@@ -18,6 +18,7 @@ namespace Network
 {
     public class HostGameManager : IDisposable
     {
+        private NetworkObject playerPrefab;
         private Allocation allocation;
         private const int MaxConnections = 20;
 
@@ -27,6 +28,11 @@ namespace Network
         private string lobbyId;
 
         private const string GameSceneName = "Game";
+
+        public HostGameManager(NetworkObject playerPrefab)
+        {
+            this.playerPrefab = playerPrefab;
+        }
 
         public async Task StartHostAsync()
         {
@@ -85,7 +91,7 @@ namespace Network
                 return;
             }
 
-            NetworkServer = new NetworkServer(NetworkManager.Singleton);
+            NetworkServer = new NetworkServer(NetworkManager.Singleton, playerPrefab);
 
             // Set Username on the network
             UserData userData = new UserData

@@ -17,14 +17,13 @@ namespace Network
 
         public NetworkServer NetworkServer { get; private set; }
 
-        private const string GameSceneName = "Game";
-
-        public ServerGameManager(string serverIP, int serverPort, int serverQPort, NetworkManager networkManager)
+        public ServerGameManager(string serverIP, int serverPort, int serverQPort, 
+            NetworkManager networkManager, NetworkObject playerPrefab)
         { 
             this.serverIP = serverIP;
             this.serverPort = serverPort;
             this.serverQPort = serverQPort;
-            NetworkServer = new NetworkServer(networkManager);
+            NetworkServer = new NetworkServer(networkManager, playerPrefab);
             multiplayAllocationService = new MultiplayAllocationService();
         }
 
@@ -58,8 +57,6 @@ namespace Network
                 Debug.LogWarning("NetworkServer did not start as expected.");
                 return;
             }
-
-            NetworkManager.Singleton.SceneManager.LoadScene(GameSceneName, LoadSceneMode.Single);
         }
 
         private async Task<MatchmakingResults> GetMatchmakingPayload()
@@ -75,6 +72,7 @@ namespace Network
             return null;
         }
 
+        // Do backfilling
         private async Task StartBackfill(MatchmakingResults matchmakerPayload)
         {
             backfiller = new MatchplayBackfiller($"{serverIP}:{serverPort}", 

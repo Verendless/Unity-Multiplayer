@@ -4,6 +4,7 @@ using Combat;
 using Input;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace PlayerCore
 {
@@ -24,6 +25,7 @@ namespace PlayerCore
         [SerializeField] private float muzzleFlashDuration;
         [SerializeField] private int costToFire;
 
+        private bool isPointerOverUI;
         private bool shouldFire;
         private float timer;
         private float muzzleFlashTimer;
@@ -56,6 +58,9 @@ namespace PlayerCore
 
             if (!IsOwner) return;
 
+            // Check if player cursor is over the UI element
+            isPointerOverUI = EventSystem.current.IsPointerOverGameObject();
+
             if (timer > 0)
                 timer -= Time.deltaTime;
 
@@ -73,6 +78,10 @@ namespace PlayerCore
 
         private void HandlePrimaryFire(bool shouldFire)
         {
+            // return when player cursor is over the UI element
+            if(shouldFire)
+                if (isPointerOverUI) return;
+
             this.shouldFire = shouldFire;
         }
 

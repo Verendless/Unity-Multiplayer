@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using UnityEngine;
@@ -9,6 +10,7 @@ namespace Network
     public class NetworkServer : IDisposable
     {
         private NetworkManager networkManager;
+        private NetworkObject playerPrefab;
         private Dictionary<ulong, string> clientIdToAuth = new Dictionary<ulong, string>();
         private Dictionary<string, UserData> authIdToUserData = new Dictionary<string, UserData>();
        
@@ -18,9 +20,10 @@ namespace Network
         public Action<string> OnClientLeft;
 
 
-        public NetworkServer(NetworkManager networkManager)
+        public NetworkServer(NetworkManager networkManager, NetworkObject playerPrefab)
         {
             this.networkManager = networkManager;
+            this.playerPrefab = playerPrefab;
 
             networkManager.ConnectionApprovalCallback += ApprovalCheck;
             networkManager.OnServerStarted += OnNetworkReady;
@@ -48,10 +51,23 @@ namespace Network
             // Invoke the event
             OnUserJoined?.Invoke(userData);
 
+            _ = SpawnPlayerDelayed(request.ClientNetworkId);
+
             response.Approved = true;
-            response.Position = SpawnPoint.GetRandomSpawnPointPos();
-            response.Rotation = Quaternion.identity;
-            response.CreatePlayerObject = true;
+            response.CreatePlayerObject = false;
+        }
+
+        // Spawn new Player within certain delay
+        private async Task SpawnPlayerDelayed(ulong clientId)
+        {
+            await Task.Delay(1000);
+
+            NetworkObject playerInstance = GameObject.Instantiate(playerPrefab, 
+                SpawnPoint.GetRandomSpawnPointPos(), 
+                Quaternion.identity);
+
+            playerInstance.SpawnAsPlayerObject(clientId);
+
         }
 
         private void OnNetworkReady()

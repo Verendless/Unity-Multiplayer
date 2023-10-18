@@ -65,6 +65,8 @@ namespace Leaderboard
 
         private void HandleLeaderboardEntitiesChanged(NetworkListEvent<LeaderboardEntity> changeEvent)
         {
+            if (!gameObject.scene.isLoaded) return;
+
             switch(changeEvent.Type)
             {
                 // When there are new players joining the room, add them to the leaderboard list

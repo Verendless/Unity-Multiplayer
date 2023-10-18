@@ -19,11 +19,7 @@ namespace Network
 
                 instance = FindObjectOfType<ClientSingleton>();
 
-                if (instance == null)
-                {
-                    Debug.LogError("No ClientSingleton in the Scene!");
-                    return null;
-                }
+                if (instance == null) return null;
 
                 return instance;
             }

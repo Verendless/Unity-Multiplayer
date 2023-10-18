@@ -2175,7 +2175,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   queueStatusText: {fileID: 390485197}
-  queueTimeText: {fileID: 203256650}
+  queueTimerText: {fileID: 203256650}
   findMatchButtonText: {fileID: 1258869946}
   joinCodeField: {fileID: 734828634}
 --- !u!1 &1217418337
@@ -2271,6 +2271,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e26e29e694ce1a439efe00d8c7d4202, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainMenu: {fileID: 1173307658}
   lobbyItemPrefab: {fileID: 4923251322929367033, guid: e469446c5ef248049aaf9ef9cd63c75e, type: 3}
   lobbyItemParent: {fileID: 510431587}
 --- !u!1 &1258869944
