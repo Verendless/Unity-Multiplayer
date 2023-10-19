@@ -4,6 +4,7 @@ using TMPro;
 using Unity.Services.Lobbies.Models;
 using Unity.Services.Lobbies;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private TMP_Text queueTimerText;
     [SerializeField] private TMP_Text findMatchButtonText;
     [SerializeField] private TMP_InputField joinCodeField;
+    [SerializeField] private Toggle teamToggle;
+    [SerializeField] private Toggle lobbyVisiblityToggle;
 
     private bool isMatchmaking;
     private bool isCanceling;
@@ -61,7 +64,7 @@ public class MainMenu : MonoBehaviour
         if (isBusy) return;
 
         // Start Queue
-        ClientSingleton.Instance.ClientGameManager.MatchmakeAsync(OnMatchMade);
+        ClientSingleton.Instance.ClientGameManager.MatchmakeAsync(teamToggle.isOn, OnMatchMade);
         findMatchButtonText.text = "Cancel";
         queueStatusText.text = "Searching...";
         timeInQueue = 0;
@@ -98,7 +101,7 @@ public class MainMenu : MonoBehaviour
 
         isBusy = true;
 
-        await HostSingleton.Instance.HostGameManager.StartHostAsync();
+        await HostSingleton.Instance.HostGameManager.StartHostAsync(lobbyVisiblityToggle.isOn);
 
         isBusy = false;
     }

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
@@ -66,7 +65,7 @@ namespace Core
         {
             if (!IsServer) return;
 
-            if(RemainingCooldown > 0f)
+            if (RemainingCooldown > 0f)
             {
                 RemainingCooldown -= Time.deltaTime;
 

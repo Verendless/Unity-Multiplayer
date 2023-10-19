@@ -7,6 +7,8 @@ namespace Combat
 {
     public class DealDamageOnContact : MonoBehaviour
     {
+
+        [SerializeField] private Projectile projectile;
         [SerializeField] private int damage = 5;
 
         private ulong ownerClientId;
@@ -20,13 +22,13 @@ namespace Combat
         {
             if (!collision.attachedRigidbody) return;
 
-            if(collision.attachedRigidbody.TryGetComponent<NetworkObject>(out NetworkObject networkObject))
-                if (ownerClientId == networkObject.OwnerClientId) return;
+            if(projectile.TeamIndex != -1)
+                if (collision.attachedRigidbody.TryGetComponent<TankPlayer>(out TankPlayer tankPlayer))
+                    if (tankPlayer.TeamIndex.Value == projectile.TeamIndex)
+                        return;
 
             if (collision.attachedRigidbody.TryGetComponent<Health>(out Health health))
-            {
                 health.TakeDamage(damage);
-            }
         }
     }
 

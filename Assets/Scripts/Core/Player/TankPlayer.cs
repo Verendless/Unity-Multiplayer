@@ -22,6 +22,7 @@ public class TankPlayer : NetworkBehaviour
 
 
     public NetworkVariable<FixedString32Bytes> playerName = new NetworkVariable<FixedString32Bytes>();
+    public NetworkVariable<int> TeamIndex = new NetworkVariable<int>();
 
     public static event Action<TankPlayer> OnPlayerSpawn;
     public static event Action<TankPlayer> OnPlayerDespawn;
@@ -41,6 +42,7 @@ public class TankPlayer : NetworkBehaviour
             }
            
             playerName.Value = userData.userName;
+            TeamIndex.Value = userData.teamIndex;
 
             OnPlayerSpawn?.Invoke(this);
         }

@@ -1,9 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Unity.Netcode;
 using Unity.Services.Matchmaker.Models;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Network
 {
@@ -14,6 +14,8 @@ namespace Network
         private int serverQPort;
         private MatchplayBackfiller backfiller;
         private MultiplayAllocationService multiplayAllocationService;
+
+        private Dictionary<string, int> teamIdToTeamIndex = new Dictionary<string, int>();
 
         public NetworkServer NetworkServer { get; private set; }
 
@@ -86,8 +88,18 @@ namespace Network
 
         private void UserJoined(UserData userData)
         {
-            // Add the player data to backfiller pool
-            backfiller.AddPlayerToMatch(userData);
+            // Assign new player to the team
+            Team team = backfiller.GetTeamByUserId(userData.userAuthId);
+
+            // Assign team index to the player
+            if(!teamIdToTeamIndex.TryGetValue(team.TeamId, out int teamIndex))
+            {
+                // If there only the player in the team, add team to the dictionary
+                teamIndex = teamIdToTeamIndex.Count;
+                teamIdToTeamIndex.Add(team.TeamId, teamIndex);
+            }
+            userData.teamIndex = teamIndex;
+
             multiplayAllocationService.AddPlayer();
 
             // If there is no need to add other player, stop the backfilling

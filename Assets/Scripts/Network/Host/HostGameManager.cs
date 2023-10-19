@@ -22,19 +22,18 @@ namespace Network
         private Allocation allocation;
         private const int MaxConnections = 20;
 
-        public NetworkServer NetworkServer { get; private set; }
-
-        public string JoinCode { get; private set; }
         private string lobbyId;
-
         private const string GameSceneName = "Game";
+
+        public NetworkServer NetworkServer { get; private set; }
+        public string JoinCode { get; private set; }
 
         public HostGameManager(NetworkObject playerPrefab)
         {
             this.playerPrefab = playerPrefab;
         }
 
-        public async Task StartHostAsync()
+        public async Task StartHostAsync(bool isLobbyPrivate)
         {
             // Try get server allocation with certain MaxConnection
             try
@@ -68,7 +67,7 @@ namespace Network
             try
             {
                 CreateLobbyOptions lobbyOptions = new CreateLobbyOptions();
-                lobbyOptions.IsPrivate = false;
+                lobbyOptions.IsPrivate = isLobbyPrivate;
                 lobbyOptions.Data = new Dictionary<string, DataObject>()
                 {
                   {
