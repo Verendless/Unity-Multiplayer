@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using Unity.Collections;
-using Unity.Netcode;
 using UnityEngine;
 
 namespace Leaderboard
@@ -10,35 +7,44 @@ namespace Leaderboard
     public class LeaderboardItem : MonoBehaviour
     {
         [SerializeField] private TMP_Text displayText;
-        [SerializeField] private Color myColor;
 
+        private FixedString32Bytes displayName;
+
+        public int TeamIndex {  get; private set; }
         public ulong ClientId { get; private set; }
-        public int PlayerCoins { get; private set; }
+        public int Coins { get; private set; }
 
-        private FixedString32Bytes playerName;
-
-
-        public void Initialize(ulong clientId, FixedString32Bytes playerName, int playerCoins)
+        public void Initialize(ulong clientId, FixedString32Bytes displayName, int playerCoins)
         {
             ClientId = clientId;
-            this.playerName = playerName;
-
-            if(clientId.Equals(NetworkManager.Singleton.LocalClientId))
-                displayText.color = myColor;
+            this.displayName = displayName;
 
             UpdateCoin(playerCoins);
         }
 
+        public void Initialise(int teamIndex, FixedString32Bytes displayName, int playerCoins)
+        {
+            TeamIndex = teamIndex;
+            this.displayName = displayName;
+
+            UpdateCoin(playerCoins);
+        }
+
+        public void SetColor(Color color)
+        {
+            displayText.color = color;
+        }
+
         public void UpdateCoin(int coins)
         {
-            PlayerCoins = coins;
+            Coins = coins;
 
             UpdateText();
         }
 
         public void UpdateText()
         {
-            displayText.text = $"{transform.GetSiblingIndex() + 1}. {playerName} - {PlayerCoins}";
+            displayText.text = $"{transform.GetSiblingIndex() + 1}. {displayName} - {Coins}";
         }
     }
 

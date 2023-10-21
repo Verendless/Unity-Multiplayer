@@ -60,7 +60,7 @@ namespace Network
         // Spawn new Player within certain delay
         private async Task SpawnPlayerDelayed(ulong clientId)
         {
-            await Task.Delay(1000);
+            await Task.Delay(100);
 
             NetworkObject playerInstance = GameObject.Instantiate(playerPrefab, 
                 SpawnPoint.GetRandomSpawnPointPos(), 

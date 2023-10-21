@@ -23,7 +23,7 @@ namespace Network
 
         private MatchplayMatchmaker matchmaker;
 
-        private UserData userData;
+        public UserData UserData { get; private set; }
 
         public async Task<bool> InitAsync()
         {
@@ -38,7 +38,7 @@ namespace Network
             if (authState == AuthState.Authenticated)
             {
                 // Set user data
-                userData = new UserData
+                UserData = new UserData
                 {
                     userName = PlayerPrefs.GetString(NameSelector.PlayerNameKey, "Missing Name"),
                     userAuthId = AuthenticationService.Instance.PlayerId,
@@ -86,7 +86,7 @@ namespace Network
         private void ConnectiClient()
         {
             // Convert userData from JSON to byte array
-            string payload = JsonUtility.ToJson(userData);
+            string payload = JsonUtility.ToJson(UserData);
             byte[] payloadBytes = Encoding.UTF8.GetBytes(payload);
 
             // Send Username to the network
@@ -100,14 +100,14 @@ namespace Network
         {
             if(matchmaker.IsMatchmaking) { return; }
 
-            userData.userGamePreferences.gameQueue = isTeamQueue ? GameQueue.Team : GameQueue.Solo;
+            UserData.userGamePreferences.gameQueue = isTeamQueue ? GameQueue.Team : GameQueue.Solo;
             MatchmakerPollingResult matchmakerPollingResult = await GetMatchAsync();
             onMatchmakeResponse?.Invoke(matchmakerPollingResult);
         }
 
         private async Task<MatchmakerPollingResult> GetMatchAsync()
         {
-            MatchmakingResult matchmakingResult = await matchmaker.Matchmake(userData);
+            MatchmakingResult matchmakingResult = await matchmaker.Matchmake(UserData);
 
             if(matchmakingResult.result == MatchmakerPollingResult.Success)
             {
