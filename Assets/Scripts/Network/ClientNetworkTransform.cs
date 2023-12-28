@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using Unity.Netcode.Components;
-using UnityEngine;
 
 namespace Network
 {
@@ -19,12 +16,14 @@ namespace Network
             CanCommitToTransform = IsOwner;
             base.Update();
 
-            // Let client handle thier own character movement
+            // Let client handle their own character movement
             // This is for reduced the lag and rubber banding
-            if(NetworkManager != null)
-                if(NetworkManager.IsConnectedClient || NetworkManager.IsListening)
-                    if (CanCommitToTransform)
-                        TryCommitTransformToServer(transform, NetworkManager.LocalTime.Time);
+            // NOTE: This is creating ticks duplication
+            // Disabled for now
+            /*            if (NetworkManager == null) return;
+                        if (!NetworkManager.IsConnectedClient && !NetworkManager.IsListening) return;
+                        if (CanCommitToTransform)
+                            TryCommitTransformToServer(transform, NetworkManager.LocalTime.Time);*/
         }
 
         protected override bool OnIsServerAuthoritative()

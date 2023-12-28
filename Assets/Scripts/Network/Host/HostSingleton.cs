@@ -15,7 +15,7 @@ namespace Network
             {
                 if (instance != null) return instance;
 
-                instance = FindObjectOfType<HostSingleton>();
+                instance = FindFirstObjectByType<HostSingleton>();
 
                 if (instance == null) return null;
 

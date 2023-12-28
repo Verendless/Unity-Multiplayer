@@ -98,7 +98,7 @@ namespace Network
 
         public async void MatchmakeAsync(bool isTeamQueue, Action<MatchmakerPollingResult> onMatchmakeResponse)
         {
-            if(matchmaker.IsMatchmaking) { return; }
+            if (matchmaker.IsMatchmaking) { return; }
 
             UserData.userGamePreferences.gameQueue = isTeamQueue ? GameQueue.Team : GameQueue.Solo;
             MatchmakerPollingResult matchmakerPollingResult = await GetMatchAsync();
@@ -109,7 +109,7 @@ namespace Network
         {
             MatchmakingResult matchmakingResult = await matchmaker.Matchmake(UserData);
 
-            if(matchmakingResult.result == MatchmakerPollingResult.Success)
+            if (matchmakingResult.result == MatchmakerPollingResult.Success)
             {
                 StartClient(matchmakingResult.ip, matchmakingResult.port);
             }

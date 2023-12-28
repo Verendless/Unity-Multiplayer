@@ -17,7 +17,7 @@ namespace Network
             {
                 if (instance != null) return instance;
 
-                instance = FindObjectOfType<ServerSingleton>();
+                instance = FindFirstObjectByType<ServerSingleton>();
 
                 if (instance == null) return null;
 

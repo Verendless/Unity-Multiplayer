@@ -47,18 +47,23 @@ namespace Coin
 
         private Vector2 GetSpawnPoint()
         {
-            float x = 0; 
+            float x = 0;
             float y = 0;
 
-            while(true)
+            while (true)
             {
                 x = Random.Range(xSpawnRange.x, xSpawnRange.y);
                 y = Random.Range(ySpawnRange.x, ySpawnRange.y);
 
                 Vector2 spawnPoint = new Vector2(x, y);
-                int numColliders = Physics2D.OverlapCircleNonAlloc(spawnPoint, coinRadius, coinBuffer, layerMask);
+                ContactFilter2D contactFilter2D = new()
+                {
+                    layerMask = layerMask
+                };
+                int numColliders = Physics2D.OverlapCircle(spawnPoint, coinRadius, contactFilter2D, coinBuffer);
 
-                if (numColliders == 0) return spawnPoint;
+                if (numColliders == 0)
+                    return spawnPoint;
 
             }
         }

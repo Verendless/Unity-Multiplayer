@@ -1,5 +1,4 @@
 using Combat;
-using System;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -9,23 +8,25 @@ namespace Coin
     {
         [Header("References")]
         [SerializeField] private Health health;
+
         [SerializeField] private BountyCoin bountyCoinPrefab;
 
         [Header("Settings")]
         [SerializeField] private float coinSpread = 3f;
+
         [SerializeField] private float bountyCoinPercentage = 50f;
         [SerializeField] private int bountyCoinCount = 10;
         [SerializeField] private int minBountyCoinValue = 5;
         [SerializeField] private LayerMask layerMask;
 
-        private Collider2D[] coinBuffer = new Collider2D[1];
+        private readonly Collider2D[] coinBuffer = new Collider2D[1];
         private float coinRadius;
 
         public NetworkVariable<int> TotalCoins = new NetworkVariable<int>();
 
         public override void OnNetworkSpawn()
         {
-            if(!IsServer) return;
+            if (!IsServer) return;
 
             coinRadius = bountyCoinPrefab.GetComponent<CircleCollider2D>().radius;
 
@@ -64,25 +65,28 @@ namespace Coin
             while (true)
             {
                 Vector2 spawnPoint = (Vector2)transform.position + UnityEngine.Random.insideUnitCircle * coinSpread;
-                int numColliders = Physics2D.OverlapCircleNonAlloc(spawnPoint, coinRadius, coinBuffer, layerMask);
+                ContactFilter2D contactFilter2D = new()
+                {
+                    layerMask = layerMask
+                };
+                int numColliders = Physics2D.OverlapCircle(spawnPoint, coinRadius, contactFilter2D, coinBuffer);
 
-                if (numColliders == 0) return spawnPoint;
-
+                if (numColliders == 0)
+                    return spawnPoint;
             }
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (!collision.TryGetComponent(out Coin coin)) return;
+            if (!collision.TryGetComponent(out Coin coin))
+                return;
 
             int tempCoinWallet = coin.Collect();
 
-            if (!IsServer) return;
+            if (!IsServer)
+                return;
 
             TotalCoins.Value += tempCoinWallet;
         }
-
-
     }
-
 }

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -17,7 +15,7 @@ namespace Network
             {
                 if (instance != null) return instance;
 
-                instance = FindObjectOfType<ClientSingleton>();
+                instance = FindFirstObjectByType<ClientSingleton>();
 
                 if (instance == null) return null;
 

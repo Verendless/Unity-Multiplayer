@@ -14,6 +14,7 @@ namespace PlayerCore
             if (!IsOwner) return;
 
             Vector2 cursorPosition = Camera.main.ScreenToWorldPoint(inputReader.AimPosition);
+
             turretTransfrom.up = new Vector2(
                 cursorPosition.x - turretTransfrom.position.x,
                 cursorPosition.y - turretTransfrom.position.y
